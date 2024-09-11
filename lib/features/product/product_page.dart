@@ -109,7 +109,13 @@ class _ProductViewState extends State<ProductView> {
                                     placeholder: (context, url) =>
                                         const CircularProgressIndicator(),
                                   ),
-                                  Text(e.name),
+                                  Text(
+                                    e.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
