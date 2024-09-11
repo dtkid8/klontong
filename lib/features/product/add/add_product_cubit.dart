@@ -1,29 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:klontong/core/state.dart';
+import 'package:klontong/features/product/add/add_product_request.dart';
 import 'package:klontong/features/product/product_repository.dart';
 
-import 'product.dart';
-
-class ProductCubit extends Cubit<GenericState> {
-  int _page = 1;
-  final List<Product> _product = [];
-  List<Product> get product => _product;
+class AddProductCubit extends Cubit<GenericState> {
   final ProductRepository productRepository;
   String _errorMessage = "";
   String get errorMessage => _errorMessage;
-  ProductCubit({required this.productRepository})
+  AddProductCubit({required this.productRepository})
       : super(GenericInitializeState());
 
-  void fetch() async {
+  void add({required AddProductRequest request}) async {
     emit(GenericLoadingState());
-    final result = await productRepository.getProducts(page: _page);
+    final result = await productRepository.addProduct(bodyRequest: request);
     result.fold((l) {
       _errorMessage = l.message;
       emit(GenericErrorState(l.message));
     }, (r) {
-      _product.addAll(r);
-      emit(GenericLoadedState(_product));
-      _page += 1;
+      emit(GenericLoadedState(r));
     });
   }
 }
