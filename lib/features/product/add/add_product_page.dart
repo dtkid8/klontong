@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:klontong/core/extension.dart';
 import 'package:klontong/features/product/add/add_input_property.dart';
 import 'package:klontong/features/product/add/add_product_cubit.dart';
 import 'package:klontong/features/product/add/add_product_request.dart';
 import 'package:klontong/features/product/product_repository.dart';
+
+import '../../../core/state.dart';
 
 class AddProductPage extends StatelessWidget {
   const AddProductPage({super.key});
@@ -92,65 +95,88 @@ class _AddProductViewState extends State<AddProductView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Add Product"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: _input
-                        .map((e) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: TextFormField(
-                                controller: e.controller,
-                                decoration: InputDecoration(
-                                  labelText: e.label,
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter ${e.label}';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  context.read<AddProductCubit>().add(
-                        request: AddProductRequest(
-                          categoryId: int.parse(_input[0].controller.text),
-                          categoryName: _input[1].controller.text,
-                          sku: _input[2].controller.text,
-                          name: _input[3].controller.text,
-                          description: _input[4].controller.text,
-                          weight: int.parse(_input[5].controller.text),
-                          width: int.parse(_input[6].controller.text),
-                          length: int.parse(_input[7].controller.text),
-                          height: int.parse(_input[8].controller.text),
-                          image: _input[9].controller.text,
-                          harga: int.parse(_input[10].controller.text),
+    return BlocListener<AddProductCubit, GenericState>(
+      listener: (context, state) {
+        if (state is GenericLoadedState) {
+          const snackBar = SnackBar(
+            content: Text('Success Add Item'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          for (var element in _input) {
+            element.controller.clear();
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("Add Product"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<AddProductCubit, GenericState>(
+            builder: (context, state) {
+              if (state is GenericLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: _input
+                              .map((e) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: TextFormField(
+                                      controller: e.controller,
+                                      decoration: InputDecoration(
+                                        labelText: e.label,
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter ${e.label}';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ))
+                              .toList(),
                         ),
-                      );
-                }
-              },
-              child: const Text('Submit'),
-            ),
-          ],
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<AddProductCubit>().add(
+                              request: AddProductRequest(
+                                categoryId:
+                                    int.parse(_input[0].controller.text),
+                                categoryName: _input[1].controller.text,
+                                sku: _input[2].controller.text,
+                                name: _input[3].controller.text.capitalizeEachWord(),
+                                description: _input[4].controller.text,
+                                weight: int.parse(_input[5].controller.text),
+                                width: int.parse(_input[6].controller.text),
+                                length: int.parse(_input[7].controller.text),
+                                height: int.parse(_input[8].controller.text),
+                                image: _input[9].controller.text,
+                                harga: int.parse(_input[10].controller.text),
+                              ),
+                            );
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

@@ -43,7 +43,7 @@ class _ProductViewState extends State<ProductView> {
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      context.read<ProductCubit>().fetch();
+      context.read<ProductCubit>().loadMore();
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {}
@@ -134,8 +134,12 @@ class _ProductViewState extends State<ProductView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddProductPage()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AddProductPage())).then(
+            (value) => context.read<ProductCubit>().refresh(),
+          );
         },
         child: const Icon(Icons.add),
       ),

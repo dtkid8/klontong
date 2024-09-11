@@ -23,7 +23,17 @@ class ProductCubit extends Cubit<GenericState> {
     }, (r) {
       _product.addAll(r);
       emit(GenericLoadedState(_product));
-      _page += 1;
     });
+  }
+
+  void loadMore() {
+    _page += 1;
+    fetch();
+  }
+
+  void refresh() {
+    _page = 1;
+    _product.clear();
+    fetch();
   }
 }
