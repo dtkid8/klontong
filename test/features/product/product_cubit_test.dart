@@ -49,6 +49,8 @@ void main() {
       ],
       verify: (cubit) {
         verify(() => productRepository.getProducts()).called(1);
+        expect(cubit.product, equals(mockListProduct));
+        expect(cubit.errorMessage, equals(''));
       },
     );
     blocTest<ProductCubit, GenericState>(
@@ -67,6 +69,49 @@ void main() {
       ],
       verify: (cubit) {
         verify(() => productRepository.getProducts()).called(1);
+        expect(cubit.product, equals([]));
+        expect(cubit.errorMessage, equals('Request Error'));
+      },
+    );
+
+    blocTest<ProductCubit, GenericState>(
+      'Should emit [Loading,Loaded] when load more is success',
+      build: () {
+        when(() => productRepository.getProducts(page: 2))
+            .thenAnswer((_) async => Right(mockListProduct));
+        return cubit;
+      },
+      act: (cubit) => cubit.loadMore(),
+      expect: () => [
+        GenericLoadingState(),
+        GenericLoadedState(
+          mockListProduct,
+        )
+      ],
+      verify: (cubit) {
+        verify(() => productRepository.getProducts(page: 2)).called(1);
+        expect(cubit.product, equals(mockListProduct));
+      },
+    );
+
+    blocTest<ProductCubit, GenericState>(
+      'Should emit [Loading,Loaded] when refresh is success',
+      build: () {
+        when(() => productRepository.getProducts(page: 1))
+            .thenAnswer((_) async =>
+                Right(mockListProduct)); // Mock successful response
+        return cubit;
+      },
+      act: (cubit) => cubit.refresh(),
+      expect: () => [
+        GenericLoadingState(),
+        GenericLoadedState(
+          mockListProduct,
+        )
+      ],
+      verify: (cubit) {
+        verify(() => productRepository.getProducts(page: 1)).called(1);
+        expect(cubit.product, equals(mockListProduct));
       },
     );
   });

@@ -45,7 +45,9 @@ void main() {
         )
       ],
       verify: (cubit) {
-        verify(() => productRepository.addProduct(bodyRequest: mockRequestAddProductResponse)).called(1);
+        verify(() => productRepository.addProduct(
+            bodyRequest: mockRequestAddProductResponse)).called(1);
+        expect(cubit.errorMessage, equals(''));
       },
     );
     blocTest<AddProductCubit, GenericState>(
@@ -64,7 +66,9 @@ void main() {
         const GenericErrorState("Request Error"),
       ],
       verify: (cubit) {
-        verify(() => productRepository.addProduct(bodyRequest: mockRequestAddProductResponse)).called(1);
+        verify(() => productRepository.addProduct(
+            bodyRequest: mockRequestAddProductResponse)).called(1);
+        expect(cubit.errorMessage, equals('Request Error'));
       },
     );
   });

@@ -49,6 +49,8 @@ void main() {
       ],
       verify: (cubit) {
         verify(() => productRepository.seacrhProduct(query: query)).called(1);
+        expect(cubit.product, equals(mockListProduct));
+        expect(cubit.errorMessage, equals(''));
       },
     );
     blocTest<SearchProductCubit, GenericState>(
@@ -67,6 +69,8 @@ void main() {
       ],
       verify: (cubit) {
         verify(() => productRepository.seacrhProduct(query: query)).called(1);
+        expect(cubit.product, equals([]));
+        expect(cubit.errorMessage, equals('Request Error'));
       },
     );
   });
