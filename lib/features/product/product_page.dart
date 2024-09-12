@@ -1,9 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:klontong/features/product/add/add_product_page.dart';
-import 'package:klontong/features/product/detail/detail_product_page.dart';
 import 'package:klontong/features/product/product.dart';
+import 'package:klontong/features/product/product_card_widget.dart';
 import 'package:klontong/features/product/product_cubit.dart';
 import 'package:klontong/features/product/product_repository.dart';
 
@@ -88,38 +87,7 @@ class _ProductViewState extends State<ProductView> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: product
                         .map(
-                          (e) => GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailProductPage(
-                                    product: e,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Card(
-                              child: Column(
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl: e.image,
-                                    errorWidget: (context, url, error) =>
-                                        const SizedBox.shrink(),
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                  ),
-                                  Text(
-                                    e.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          (e) => ProductCardWidget(product: e),
                         )
                         .toList(),
                   ),

@@ -31,7 +31,7 @@ void main() {
     test('should return list of products when response is success (200)',
         () async {
       // arrange
-      const url = "${Url.baseUrl}${Url.product}";
+      final url = "${Url.baseUrl}${Url.product}";
       const int page = 1;
       final mockResponse = Response(
         requestOptions: RequestOptions(path: url),
@@ -65,7 +65,7 @@ void main() {
     test('should return a Failure when the response code is 404 or other',
         () async {
       // arrange
-      const url = "${Url.baseUrl}${Url.product}";
+      final url = "${Url.baseUrl}${Url.product}";
       const int page = 1;
       final dioException = DioException(
         requestOptions: RequestOptions(path: url),
@@ -110,7 +110,7 @@ void main() {
         () async {
       // arrange
       const String query = "Taro";
-      const url = "${Url.baseUrl}${Url.product}";
+      final url = "${Url.baseUrl}${Url.product}";
 
       final mockResponse = Response(
         requestOptions: RequestOptions(path: url),
@@ -143,7 +143,7 @@ void main() {
         () async {
       // arrange
       const String query = "Taro";
-      const url = "${Url.baseUrl}${Url.product}";
+      final url = "${Url.baseUrl}${Url.product}";
 
       final dioException = DioException(
         requestOptions: RequestOptions(path: url),
@@ -183,7 +183,7 @@ void main() {
     test('should return true when response is success (200)',
         () async {
       // arrange
-      const url = "${Url.baseUrl}${Url.product}";
+      final url = "${Url.baseUrl}${Url.product}";
 
       final mockResponse = Response(
         requestOptions: RequestOptions(path: url),
@@ -212,7 +212,7 @@ void main() {
     test('should return a Failure when the response code is 404 or other',
         () async {
       // arrange
-      const url = "${Url.baseUrl}${Url.product}";
+      final url = "${Url.baseUrl}${Url.product}";
 
       final dioException = DioException(
         requestOptions: RequestOptions(path: url),

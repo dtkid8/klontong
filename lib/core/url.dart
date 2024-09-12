@@ -1,4 +1,6 @@
+import 'package:klontong/core/env.dart';
+
 class Url{
-  static const baseUrl = "https://caccae1d21fff909f461.free.beeceptor.com";
+  static String baseUrl = Env.baseUrl;
   static const product = "/api/product/";
 }

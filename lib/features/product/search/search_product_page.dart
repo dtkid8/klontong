@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:klontong/features/product/product.dart';
+import 'package:klontong/features/product/product_card_widget.dart';
 import 'package:klontong/features/product/product_repository.dart';
 import '../../../core/state.dart';
 import 'search_product_cubit.dart';
@@ -13,7 +13,8 @@ class SearchProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SearchProductCubit(
-          productRepository: context.read<ProductRepository>()),
+        productRepository: context.read<ProductRepository>(),
+      ),
       child: const SearchProductView(),
     );
   }
@@ -98,20 +99,7 @@ class _SearchProductViewState extends State<SearchProductView> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: product
                         .map(
-                          (e) => Card(
-                            child: Column(
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl: e.image,
-                                  errorWidget: (context, url, error) =>
-                                      const SizedBox.shrink(),
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                ),
-                                Text(e.name),
-                              ],
-                            ),
-                          ),
+                          (e) => ProductCardWidget(product: e),
                         )
                         .toList(),
                   ),
