@@ -2,6 +2,8 @@
 
 A Flutter Project using MVVM architecture using Cubit (flutter_bloc), include unit test and Sentry(Error Monitoring). Also this project integrated with backend as service from Beeceptor(CRUD api mock). Secure the .env file with envied package.
 
+## Demo
+[Link Demo](https://drive.google.com/drive/folders/1NjrFKg_ZlC33mNp7REVYb9XzPz2sqqI4?usp=sharing)
 ## Sentry
 ![Screenshot 2024-09-12 174126](https://github.com/user-attachments/assets/dd8aa6a0-cc50-4509-9231-703b54775988)
 
