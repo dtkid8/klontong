@@ -1,16 +1,31 @@
-# klontong
+# Klontong
 
-A new Flutter project.
+A Flutter Project using MVVM architecture using Cubit (flutter_bloc), include unit test and Sentry(Error Monitoring). Also this project integrated with backend as service from Beeceptor(CRUD api mock). Secure the .env file with envied package
 
-## Getting Started
+## Features
+- List Product
+- Search Product (Match case by product name). If you search 'taro' it will only result the name 'Taro'.
+- Add Product
+- Detail Product
 
-This project is a starting point for a Flutter application.
+## Development
 
-A few resources to get you started if this is your first Flutter project:
+Clone the repository, then install the dependencies:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    flutter pub get
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Create .env file in your root project folder:
+
+    BASE_URL= https://caccae1d21fff909f461.free.beeceptor.com
+    SENTRY_URL =https://7e5e9a53cbdc82b29e78968cbab71d76@o4507933971251200.ingest.de.sentry.io/4507933973151824
+    
+You can change the beeceptor url with your own beeceptor url, but you also must change the mock rules (For the endpoint "/api/product/"). 
+
+Run the following to launch the code generation to generate .env file:
+
+    dart run build_runner clean
+    dart run build_runner build --delete-conflicting-outputs
+
+Start the app:
+
+    flutter run
