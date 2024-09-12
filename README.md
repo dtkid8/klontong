@@ -1,6 +1,6 @@
 # Klontong
 
-A Flutter Project using MVVM architecture using Cubit (flutter_bloc), include unit test and Sentry(Error Monitoring). Also this project integrated with backend as service from Beeceptor(CRUD api mock). Secure the .env file with envied package.
+A MVVM architecture Flutter Project using Cubit (flutter_bloc), include unit test and Sentry(Error Monitoring). Also this project integrated with backend as service from Beeceptor(CRUD api mock[50 request/daily]). Secure the .env file with envied package.
 
 ## Demo
 [Link Demo](https://drive.google.com/drive/folders/1NjrFKg_ZlC33mNp7REVYb9XzPz2sqqI4?usp=sharing)
